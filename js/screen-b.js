@@ -55,18 +55,35 @@ function ScreenB() {
 
       <div style={{
         position: 'fixed', left: 32, right: 32, bottom: 24,
-        padding: '14px 22px',
-        background: 'rgba(28, 28, 23, 0.92)', backdropFilter: 'blur(8px)',
-        color: '#fff', borderRadius: 12,
-        display: 'flex', alignItems: 'center', gap: 16,
-        boxShadow: '0 12px 32px rgba(28, 28, 23, 0.18)', zIndex: 50,
+        padding: '18px 24px',
+        background: 'rgba(28, 28, 23, 0.94)', backdropFilter: 'blur(8px)',
+        color: '#fff', borderRadius: 14,
+        display: 'flex', alignItems: 'center', gap: 22,
+        boxShadow: '0 16px 40px rgba(28, 28, 23, 0.25)', zIndex: 50,
       }}>
-        <QRBlock url={cfg.SUBMIT_URL} />
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 14, fontWeight: 600, letterSpacing: '-0.005em' }}>
+        <div style={{
+          width: 120, height: 120, borderRadius: 10, background: '#fff',
+          padding: 6, flexShrink: 0,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        }}>
+          <img src="assets/qa-qr-branded.png" alt="현장 질문 보드 QR"
+               style={{ width: '100%', height: '100%', display: 'block', objectFit: 'contain' }} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+            textTransform: 'uppercase', color: 'var(--primary-300)',
+            marginBottom: 6,
+          }}>
+            Q &amp; A · Open Floor
+          </div>
+          <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1.25 }}>
             QR을 스캔하여 질문을 보내 주세요
           </div>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>
+          <div style={{
+            fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6,
+            fontFamily: 'var(--font-mono)', letterSpacing: '-0.005em',
+          }}>
             {cfg.SUBMIT_URL_DISPLAY || cfg.SUBMIT_URL || ''}
           </div>
         </div>
@@ -171,25 +188,6 @@ function EmptyState() {
         아직 질문이 없습니다.
       </div>
       <div style={{ fontSize: 14 }}>첫 번째 질문을 남겨 주세요.</div>
-    </div>
-  );
-}
-
-function QRBlock({ url }) {
-  const canvasRef = useRef(null);
-  useEffect(() => {
-    if (!url || !canvasRef.current || !window.QRCode) return;
-    window.QRCode.toCanvas(canvasRef.current, url, {
-      width: 56, margin: 1, color: { dark: '#0A3D2A', light: '#ffffff' },
-    }, (e) => { if (e) console.error('[KIFC] QR 생성 실패', e); });
-  }, [url]);
-  return (
-    <div style={{
-      width: 60, height: 60, borderRadius: 8, background: '#fff',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: 2, flexShrink: 0,
-    }}>
-      <canvas ref={canvasRef} style={{ width: 56, height: 56 }} />
     </div>
   );
 }
