@@ -84,6 +84,30 @@ $$;
 
 grant execute on function public.admin_toggle_hidden(uuid, text) to anon;
 
+-- 전체 초기화 RPC — 운영자 키 검증 후 questions 전부 삭제
+create or replace function public.admin_clear_all(admin_key text)
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  stored_key text;
+  deleted    integer;
+begin
+  select value into stored_key from public.app_settings where key = 'admin_key';
+  if stored_key is null or admin_key <> stored_key then
+    raise exception 'unauthorized' using errcode = '42501';
+  end if;
+
+  with d as (delete from public.questions where true returning 1)
+  select count(*) into deleted from d;
+  return deleted;
+end
+$$;
+
+grant execute on function public.admin_clear_all(text) to anon;
+
 -- app_settings 는 anon 접근 차단 (admin_key 노출 방지)
 alter table public.app_settings enable row level security;
 -- (정책 안 만들면 anon SELECT 도 차단됨)

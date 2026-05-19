@@ -1,9 +1,27 @@
 // screen-c.js — 화면 C · 운영자 모드 (URL: /admin.html?key=<ADMIN_KEY>)
 
 function ScreenC() {
-  const { questions, toggleHidden } = useStore();
+  const { questions, toggleHidden, clearAll } = useStore();
   const [keywordPanelOpen, setKeywordPanelOpen] = useState(true);
   const [copiedId, setCopiedId] = useState(null);
+  const [clearArmed, setClearArmed] = useState(false);  // 2단계 확인용
+  const clearTimerRef = useRef(null);
+
+  const onClearClick = async () => {
+    if (questions.length === 0) return;
+    if (!clearArmed) {
+      // 1단계: 무장. 5초 안에 다시 누르면 실제 삭제
+      setClearArmed(true);
+      clearTimerRef.current = setTimeout(() => setClearArmed(false), 5000);
+      return;
+    }
+    // 2단계: 실제 실행
+    clearTimeout(clearTimerRef.current);
+    setClearArmed(false);
+    await clearAll();
+  };
+
+  useEffect(() => () => clearTimeout(clearTimerRef.current), []);
 
   // ── 게이트: URL ?key=... 가 없으면 안내만 ──────────────
   const urlKey = new URLSearchParams(location.search).get('key');
@@ -63,6 +81,27 @@ function ScreenC() {
             {keywordPanelOpen ? 'visibility_off' : 'visibility'}
           </span>
           {keywordPanelOpen ? '키워드 패널 접기' : '키워드 패널 열기'}
+        </button>
+
+        <button type="button" onClick={onClearClick} disabled={questions.length === 0}
+          title="모든 질문을 삭제합니다 (복구 불가)"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px',
+            background: clearArmed ? 'var(--error)' : '#fff',
+            color: clearArmed ? '#fff' : (questions.length === 0 ? 'var(--neutral-300)' : 'var(--error)'),
+            border: `1px solid ${clearArmed ? 'var(--error)' : (questions.length === 0 ? 'var(--border)' : '#C5303033')}`,
+            borderRadius: 8, fontSize: 13, fontWeight: 600,
+            fontFamily: 'var(--font-sans)',
+            cursor: questions.length === 0 ? 'not-allowed' : 'pointer',
+            opacity: questions.length === 0 ? 0.5 : 1,
+            transition: 'all 140ms var(--ease-out)',
+          }}>
+          <span className="material-symbols-rounded" style={{ fontSize: 16 }}>
+            {clearArmed ? 'warning' : 'delete_sweep'}
+          </span>
+          {clearArmed
+            ? `정말 ${questions.length}건 전체 삭제? (5초 안 다시 클릭)`
+            : `전체 초기화${questions.length > 0 ? ` (${questions.length}건)` : ''}`}
         </button>
       </div>
 

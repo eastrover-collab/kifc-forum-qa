@@ -131,9 +131,26 @@ function StoreProvider({ children }) {
     }
   };
 
+  // ── 운영자: 전체 초기화 (화면 C) ──────────────────────
+  const clearAll = async () => {
+    if (!SB) return { ok: false };
+    const cfg = window.KIFC_CONFIG || {};
+    const urlKey = new URLSearchParams(location.search).get('key');
+    const adminKey = urlKey || cfg.ADMIN_KEY;
+    const { data, error: e } = await SB.rpc('admin_clear_all', { admin_key: adminKey });
+    if (e) {
+      setToast({ kind: 'error', text: '권한 오류: ' + e.message });
+      setTimeout(() => setToast(null), 3000);
+      return { ok: false, error: e };
+    }
+    setToast({ kind: 'success', text: `${data}건 삭제 완료` });
+    setTimeout(() => setToast(null), 2500);
+    return { ok: true, deleted: data };
+  };
+
   return (
     React.createElement(Store.Provider, {
-      value: { questions, submit, toggleHidden, recentlyAdded, toast, setToast, connected, error },
+      value: { questions, submit, toggleHidden, clearAll, recentlyAdded, toast, setToast, connected, error },
     }, children)
   );
 }
