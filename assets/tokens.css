@@ -1,0 +1,240 @@
+/* =========================================================
+   KIFC 식량과기후 — Design Tokens
+   Korea Institute for Food and Climate
+   ---------------------------------------------------------
+   톤: 깔끔하고 전문적이면서 따뜻한 (Clean, professional, warm)
+   핵심 키워드: 연결 · 신뢰 · 전문성 · 명료함 · 따뜻함
+========================================================= */
+
+/* ── Webfonts ─────────────────────────────────────────── */
+/* Pretendard — CDN (jsdelivr) variable-weight subset. GH Pages 정적 호스팅에
+   ~3MB OTF 7개를 묶는 대신 CDN 사용으로 첫 로드 가볍게 처리. */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+:root {
+  /* ─────────────────────────────────────────────────────
+     ① COLORS — Primary (Forest Green)
+     Logo 그린톤에서 추출. 신뢰감 있는 짙은 숲의 녹색.
+     ─────────────────────────────────────────────────── */
+  --primary-50:  #E8F4ED;   /* 가장 옅은 배경, 호버 면 */
+  --primary-100: #C9E5D4;   /* 부드러운 강조 배경 */
+  --primary-300: #5FB088;   /* 보조 그래프, 일러스트 */
+  --primary-500: #1A8754;   /* 코어 브랜드 컬러 ── CTA, 링크 */
+  --primary-700: #0F6B41;   /* 진한 상태(hover/active), 헤딩 */
+  --primary-900: #0A3D2A;   /* 로고 다크 그린, 최강조 */
+
+  /* ② COLORS — Secondary (Earth Blue)
+     로고의 지구 블루. 데이터·자료의 신뢰감을 보강한다. */
+  --secondary-50:  #EAF1F8;
+  --secondary-100: #C9DBEB;
+  --secondary-500: #2C5F8D;   /* 지구 본체 색 */
+  --secondary-700: #1E4567;
+
+  /* ③ COLORS — Accent (Harvest Amber)
+     따뜻함 + 강조. 데이터 하이라이트, 경고가 아닌 강조에 사용. */
+  --accent-50:  #FBF3E6;
+  --accent-300: #E8B86B;
+  --accent-500: #C8861F;
+  --accent-700: #8E5A0F;
+
+  /* ④ COLORS — Neutral (Warm Stone)
+     따뜻한 톤이 살짝 섞인 그레이. 한국어 본문 가독성을 우선. */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #FAF9F5;   /* 페이지 배경 (off-white, 따뜻함) */
+  --neutral-100: #F2F0E9;   /* 카드/섹션 분리 */
+  --neutral-200: #E5E2D8;   /* 보더, 디바이더 */
+  --neutral-300: #CDC9BB;
+  --neutral-500: #8C8A7E;   /* 메타 텍스트 */
+  --neutral-700: #4A4A42;   /* 본문 보조 */
+  --neutral-900: #1C1C17;   /* 헤딩, 본문 */
+
+  /* ⑤ COLORS — Semantic */
+  --success: #1A8754;   /* primary와 통일 */
+  --warning: #D97706;
+  --error:   #C53030;
+  --info:    #2C5F8D;   /* secondary와 통일 */
+
+  /* ── 의미 토큰 (Semantic aliases) ─────────────────── */
+  --bg:           var(--neutral-50);
+  --bg-elevated:  var(--neutral-0);
+  --bg-muted:     var(--neutral-100);
+  --bg-brand:     var(--primary-500);
+  --bg-brand-soft:var(--primary-50);
+
+  --fg:           var(--neutral-900);
+  --fg-muted:     var(--neutral-700);
+  --fg-subtle:    var(--neutral-500);
+  --fg-on-brand:  var(--neutral-0);
+  --fg-brand:     var(--primary-700);
+
+  --border:       var(--neutral-200);
+  --border-strong:var(--neutral-300);
+  --border-brand: var(--primary-500);
+
+  /* ─────────────────────────────────────────────────────
+     ⑥ TYPOGRAPHY — Single family
+     모든 위계에 Pretendard 단일 패밀리 사용. weight로만 위계를 만든다.
+     ─────────────────────────────────────────────────── */
+  --font-sans:    'Pretendard', -apple-system, 'Apple SD Gothic Neo',
+                  'Noto Sans KR', system-ui, sans-serif;
+  --font-serif:   var(--font-sans);   /* 별도 세리프 미사용 — sans와 동일 */
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* 위계별 사이즈 (px) */
+  --fs-display:   56px;   /* 히어로, 메인 스테이트먼트 */
+  --fs-h1:        40px;
+  --fs-h2:        30px;
+  --fs-h3:        22px;
+  --fs-body-lg:   18px;
+  --fs-body:      16px;   /* 기본 본문 */
+  --fs-caption:   13px;
+  --fs-micro:     11px;   /* 라벨/태그 */
+
+  /* Weight */
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+
+  /* Line height */
+  --lh-tight:     1.15;   /* 디스플레이, 헤딩 */
+  --lh-snug:      1.35;   /* H2-H3 */
+  --lh-normal:    1.6;    /* 본문 한글 가독성 */
+  --lh-loose:     1.75;
+
+  /* Letter spacing — 한글은 -0.01em 정도가 가장 깔끔 */
+  --ls-tight:     -0.02em;
+  --ls-default:   -0.01em;
+  --ls-wide:      0.04em;
+
+  /* ─────────────────────────────────────────────────────
+     ⑦ SPACING — 4px 베이스
+     ─────────────────────────────────────────────────── */
+  --space-0:   0;
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+
+  /* ⑧ RADIUS */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   10px;   /* 카드 표준 */
+  --radius-lg:   16px;
+  --radius-pill: 999px;
+
+  /* ⑨ SHADOWS — 부드럽고 낮은 채도, 그린이 살짝 비치는 그림자 */
+  --shadow-xs:   0 1px 2px rgba(28, 28, 23, 0.04);
+  --shadow-sm:   0 2px 6px rgba(28, 28, 23, 0.06), 0 1px 2px rgba(28, 28, 23, 0.04);
+  --shadow-md:   0 8px 20px rgba(28, 28, 23, 0.07), 0 2px 6px rgba(28, 28, 23, 0.04);
+  --shadow-lg:   0 18px 40px rgba(15, 107, 65, 0.10), 0 4px 12px rgba(28, 28, 23, 0.06);
+  --shadow-focus:0 0 0 3px rgba(26, 135, 84, 0.25);
+
+  /* ⑩ CONTAINER */
+  --container-sm:  640px;
+  --container-md:  960px;
+  --container-lg:  1200px;
+  --container-xl:  1320px;
+
+  /* ⑪ MOTION */
+  --ease-out:    cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    400ms;
+}
+
+/* =========================================================
+   BASE — semantic type styles
+========================================================= */
+html, body {
+  font-family: var(--font-sans);
+  font-size:   var(--fs-body);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-default);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.display {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--neutral-900);
+}
+
+h1, .h1 {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--neutral-900);
+}
+
+h2, .h2 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-default);
+  color: var(--neutral-900);
+}
+
+h3, .h3 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--neutral-900);
+}
+
+p, .body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-muted);
+}
+
+.body-lg {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-normal);
+  color: var(--fg-muted);
+}
+
+.caption {
+  font-size: var(--fs-caption);
+  color: var(--fg-subtle);
+  line-height: var(--lh-snug);
+}
+
+.eyebrow {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--primary-700);
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+a {
+  color: var(--primary-700);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+a:hover {
+  color: var(--primary-900);
+  border-bottom-color: var(--primary-700);
+}
+
+::selection {
+  background: var(--primary-100);
+  color: var(--primary-900);
+}
