@@ -70,7 +70,7 @@ function ScreenA() {
         <Field label="성명" required error={errors.name} hint="8자 이내 · 익명 희망 시 '익명' 입력">
           <input type="text" value={name} maxLength={8}
                  onChange={(e) => setName(e.target.value)}
-                 placeholder="예) 남재작"
+                 placeholder="예) 홍길동"
                  aria-invalid={!!errors.name}
                  style={inputStyle(!!errors.name)} />
         </Field>
